@@ -1,10 +1,67 @@
+/*
+
+투두 앱 추가할 기능
+
+1. 날짜, 시간도 내용이랑 같이 입력
+2. 목록 안의 내용을 수정 가능
+3. 1번을 표시할 수 있는 자그마한 달력 ..?
+같은 것들도 추가되면 괜찮을거 같아요
+4. 중요도 체크
+
+*/
+
+let todoData
+let highestIdx
 const inputText = document.querySelector('.text-input')
 const btn = document.querySelector('.button')
+const saveButton = document.querySelector('.save')
 
-const addNewTask = () => {
-    const input = document.querySelector('.text-input')
+btn.addEventListener('click', (e) => {
+    const newContent = getText()
+    if (newContent === '') return
 
-    if (input.value === '') return
+    addToDB(newContent)
+
+    printTodo()
+
+    saveItem()
+})
+
+inputText.addEventListener('keypress', (e) => {
+    if (e.key !== 'Enter') return
+
+    const newContent = getText()
+
+    addToDB(newContent)
+
+    const todoList = document.querySelectorAll('.todo')
+
+    printTodo()
+
+    saveItem()
+})
+
+onStart()
+
+function onStart() {
+    todoData = JSON.parse(localStorage.getItem('todoData'))
+    if (todoData === null) {
+        localStorage.clear()
+        todoData = []
+    }
+
+    highestIdx = localStorage.getItem('highestIdx')
+    if (highestIdx === null) {
+        highestIdx = 0
+    }
+
+    todoData.forEach((data) => {
+        addNewTask(data)
+    })
+}
+
+function addNewTask(newTodo) {
+    if (newTodo.text === '') return
 
     const todoList = document.querySelector('.list')
 
@@ -16,40 +73,72 @@ const addNewTask = () => {
     checkButton.innerText = '완료'
     checkButton.addEventListener('click', (e) => {
         const task = e.path[1].childNodes[1]
-
-        if (task.innerHTML.includes('<strike>')) {
-            task.innerHTML = task.innerText
+        task.classList.toggle('done')
+        if (task.classList.contains('done')) {
+            newTodo.done = true
         } else {
-            task.innerHTML =
-                `<strike>${task.innerText}</strike>`
+            newTodo.done = false
         }
+        localStorage.setItem('todoData', JSON.stringify(todoData))
     })
 
     const textArea = document.createElement('p')
     textArea.className = 'text'
-    textArea.innerText = input.value
-    input.value = ''
+    textArea.innerText = newTodo.text
+    if (newTodo.done === true) {
+        textArea.classList.toggle('done')
+    }
 
     const deleteButton = document.createElement('button')
     deleteButton.className = 'deleteButton'
     deleteButton.innerText = '지우기'
     deleteButton.addEventListener('click', (e) => {
         e.path[1].remove()
+        todoData = todoData.filter((data) => {
+            return data.idx !== newTodo.idx
+        })
+        localStorage.setItem('todoData', JSON.stringify(todoData))
     })
 
     newList.append(checkButton)
     newList.append(textArea)
+    // newList.append(editButton)
     newList.append(deleteButton)
 
     todoList.append(newList)
 }
 
-btn.addEventListener('click', (e) => {
-    addNewTask()
-})
-
-inputText.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        addNewTask()
+function addToDB(newContent) {
+    if (newContent === '') return
+    let newTodo = {
+        idx: highestIdx++,
+        text: newContent,
+        done: false,
+        important: 0
     }
-})
+    todoData.push(newTodo)
+}
+
+function printTodo() {
+    const todoList = document.querySelectorAll('.todo')
+
+    todoList.forEach((data) => {
+        data.remove()
+    })
+
+    todoData.forEach((data) => {
+        addNewTask(data)
+    })
+}
+
+function getText() {
+    const input = document.querySelector('.text-input')
+    const inputText = input.value
+    input.value = ''
+    return inputText
+}
+
+function saveItem() {
+    localStorage.setItem('todoData', JSON.stringify(todoData))
+    localStorage.setItem('highestIdx', highestIdx)
+}

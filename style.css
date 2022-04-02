@@ -60,7 +60,7 @@ input:focus {
 }
 
 
-.button {
+.button, .save {
     display: block;
     width: 100%;
     border-radius: 10px;
@@ -89,7 +89,11 @@ input:focus {
     flex-grow: 1;
 }
 
-.checkButton, .deleteButton {
+.done {
+    text-decoration: line-through;
+}
+
+.checkButton, .deleteButton, .editButton {
     flex-grow: 0;
     padding: 5px;
 }
