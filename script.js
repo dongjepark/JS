@@ -88,6 +88,17 @@ function addNewTask(newTodo) {
     if (newTodo.done === true) {
         textArea.classList.toggle('done')
     }
+    textArea.addEventListener('click', (e) => {
+        const task = e.path[0]
+        console.log(task)
+        task.classList.toggle('done')
+        if (task.classList.contains('done')) {
+            newTodo.done = true
+        } else {
+            newTodo.done = false
+        }
+        localStorage.setItem('todoData', JSON.stringify(todoData))
+    })
 
     const deleteButton = document.createElement('button')
     deleteButton.className = 'deleteButton'
