@@ -143,10 +143,10 @@ function printTodo() {
 }
 
 function getText() {
-    const input = document.querySelector('.text-input')
-    const inputText = input.value
-    input.value = ''
-    return inputText
+    const input = document.querySelector('.text-input')     //input : '.text-input'클래스 가진 객체로의 경로
+    const inputText = input.value                           //inputText : input(경로)에 접근해서 그 값을 빼옴
+    input.value = ''                                        //input.value = '' : 입력란 비워줌
+    return inputText                                        //inputText를 리턴해줌 (getText()의 반환값)
 }
 
 function saveItem() {
