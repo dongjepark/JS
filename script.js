@@ -8,10 +8,8 @@
 
 */
 
-*/
-let : 변수에 재할당 가능
-const : 변수 재선언, 재할당 불가능
-*/
+//let : 변수에 재할당 가능 (변하는 값 저장할 때)
+//const : 변수 재선언, 재할당 불가능 (변하지 않는 값 저장할 )
 
 let todoData
 let highestIdx
@@ -136,11 +134,11 @@ function addToDB(newContent) {
 function printTodo() {
     const todoList = document.querySelectorAll('.todo')
 
-    todoList.forEach((data) => {
+    todoList.forEach((data) => {                            //forEach : 파이썬 for문과 비슷. todoList에 있는 모든 data에 대해 반복적으로 삭제
         data.remove()
     })
 
-    todoData.forEach((data) => {
+    todoData.forEach((data) => {                            //
         addNewTask(data)
     })
 }
@@ -152,7 +150,8 @@ function getText() {
     return inputText                                        //inputText를 리턴해줌 (getText()의 반환값)
 }
 
+//localStorage : 문자열만 저장 가능
 function saveItem() {
-    localStorage.setItem('todoData', JSON.stringify(todoData))  //.setItem : 'todoData' 위치의 값을 JSON 문자열로 변환환 todoData 값으로 설정 (localStorage 에는 string만 저장 가능)
+    localStorage.setItem('todoData', JSON.stringify(todoData))  //.setItem : 'todoData' 위치의 값을 JSON 문자열로 변환환 todoData 값으로 설정
     localStorage.setItem('highestIdx', highestIdx)              //'highestIdx 위치의 값을 highestIdx로 설정
 }
