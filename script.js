@@ -1,13 +1,16 @@
 /*
-
 투두 앱 추가할 기능
 
 1. 날짜, 시간도 내용이랑 같이 입력
 2. 목록 안의 내용을 수정 가능
-3. 1번을 표시할 수 있는 자그마한 달력 ..?
-같은 것들도 추가되면 괜찮을거 같아요
+3. 1번을 표시할 수 있는 자그마한 달력
 4. 중요도 체크
 
+*/
+
+*/
+let : 변수에 재할당 가능
+const : 변수 재선언, 재할당 불가능
 */
 
 let todoData
@@ -150,6 +153,6 @@ function getText() {
 }
 
 function saveItem() {
-    localStorage.setItem('todoData', JSON.stringify(todoData))
-    localStorage.setItem('highestIdx', highestIdx)
+    localStorage.setItem('todoData', JSON.stringify(todoData))  //.setItem : 'todoData' 위치의 값을 JSON 문자열로 변환환 todoData 값으로 설정 (localStorage 에는 string만 저장 가능)
+    localStorage.setItem('highestIdx', highestIdx)              //'highestIdx 위치의 값을 highestIdx로 설정
 }
